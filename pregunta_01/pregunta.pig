@@ -14,5 +14,5 @@ $ pig -x local -f pregunta.pig
 */
 data = LOAD 'data.tsv' USING PigStorage ('\t') AS (letter:chararray, date:chararray, num:int);
 grouped = GROUP data BY letter;
-result = FOREACH grouped GENERATE group, SUM(data.letter);
+result = FOREACH grouped GENERATE group, COUNT(data.letter);
 STORE result INTO 'output';
