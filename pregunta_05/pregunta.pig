@@ -15,5 +15,5 @@ $ pig -x local -f pregunta.pig
 data= LOAD 'data.tsv' USING PigStorage('\t') AS (c1:chararray, c2:chararray, c3:chararray);
 data_1 = FOREACH data GENERATE FLATTEN(TOKENIZE(c2)) AS letter;
 grouped= GROUP data_1 BY letter;
-counter=FOREACH grouped GENERATE group, COUNT(data_1)
+counter= FOREACH grouped GENERATE group, COUNT(data_1);
 STORE counter INTO 'output' USING PigStorage(',');

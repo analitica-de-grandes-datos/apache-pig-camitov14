@@ -41,7 +41,7 @@ data= LOAD 'data.csv' USING PigStorage(',') AS (
   routeId:biginteger,
   routeName:chararray,
   eventDate:chararray);
-colums= FOREACH data GENERATE driverId,truckId,eventTime
+colums= FOREACH data GENERATE driverId,truckId,eventTime;
 select= LIMIT columns 10;
 ordered_data= ORDER select BY driverId asc,truckId asc,eventTime asc;
 STORE ordered_data INTO 'output' USING PigStorage(',');
