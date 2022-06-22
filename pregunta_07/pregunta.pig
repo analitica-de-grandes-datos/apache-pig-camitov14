@@ -15,6 +15,6 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 data= LOAD 'data.tsv' USING PigStorage('\t') AS (c1:chararray, c2:BAG{}, c3:MAP[]);
-data_1 = FOREACH data GENERATE c1, SIZE(c2), SIZE(c3) AS (c1_2:chararray, c2_c:int, c3_2:int);
-ordered_data = ORDER data_1 BY c1_2 asc, c2_2 asc, c3_2 asc;
+data_1 = FOREACH data GENERATE c1, SIZE(c2), SIZE(c3);
+ordered_data = ORDER data_1 BY c1 asc, c2 asc, c3 asc;
 STORE ordered_data INTO 'output' USING PigStorage(',');
