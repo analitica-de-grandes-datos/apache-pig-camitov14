@@ -34,5 +34,5 @@ $ pig -x local -f pregunta.pig
 */
 data= LOAD 'data.csv' USING PigStorage(',') AS (c1:int, c2:chararray, c3:chararray, c4:chararray, c5:chararray, c6:int);
 data_1= FOREACH data GENERATE UCFIRST(c3), UPPER(c3), LOWER(c3);
-ordered_data = ORDER data BY $0 asc;
+ordered_data = ORDER data_1 BY $0 asc;
 STORE ordered_data INTO 'output' USING PigStorage(',');
