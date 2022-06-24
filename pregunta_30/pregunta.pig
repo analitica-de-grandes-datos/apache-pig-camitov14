@@ -33,4 +33,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-
+data= LOAD 'data.csv' USING PigStorage(',') AS (c1:int, firstname:chararray, c3:chararray, birthday:chararray, color:chararray, c6:int);
+data_1= FOREACH data GENERATE TODATE(birthday,'yyyy-MM-dd') AS (fecha:DateTime);
+data_2 = FOREACH data_1 GENERATE fecha,GETDAY(fecha),GETDAY(fecha),GETDAY(fecha),GETDAY(fecha);
+STORE data_2 INTO 'output' USING PigStorage(',');
