@@ -35,8 +35,12 @@ $ pig -x local -f pregunta.pig
 */
 datos = LOAD 'data.csv' USING PigStorage(',')
 AS (col1:int, col2:chararray, col3:chararray, col4:datetime, col5:chararray, col6:int);
-trans1 = FOREACH datos GENERATE ToString(col4, 'yyyy-MM-dd,dd,d,EEE,EEEE') AS date;
-trans2 = FOREACH trans1 GENERATE LOWER(date);
+trans1 = FOREACH ejercicio GENERATE ToString(fecha, 'yyyy-MM-dd') AS fecha, ToString(fecha, 'dd,d') AS dia, ToString(fecha, 'EEE') AS nombre_pdia, ToString(fecha, 'EEEE') AS nombre_dia;;
+trans2 =FOREACH trans1 GENERATE fecha, dia, (nombre_pdia == 'Mon'? 'lun':(nombre_pdia == 'Tue'? 'mar':(nombre_pdia == 'Wed'? 'mie': 
+(nombre_pdia == 'Thu'? 'jue':(nombre_pdia == 'Fri'? 'vie':(nombre_pdia == 'Sat'? 'sab':(nombre_pdia == 'Sun'? 'dom':'falso'))))))) as diaAbreviado,  
+(nombre_dia == 'Monday'? 'lunes':(nombre_dia == 'Tuesday'? 'martes':(nombre_dia == 'Wednesday'? 'miercoles': 
+(nombre_dia == 'Thursday'? 'jueves':(nombre_dia == 'Friday'? 'viernes':(nombre_dia == 'Saturday'? 'sabado':(nombre_dia == 'Sunday'? 'domingo':'falso'))))))) as diaCompleto; 
+
 
 STORE trans2 INTO 'output' USING PigStorage (',');
 
